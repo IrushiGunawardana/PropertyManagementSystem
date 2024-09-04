@@ -1,0 +1,26 @@
+.p-5 {
+    padding: 20px;
+  }
+  
+  .mt-5 {
+    margin-top: 20px;
+  }
+  
+  .job-row:hover {
+    cursor: pointer;
+    background-color: #e6f7ff;
+  }
+  
+  .job-row {
+    border-bottom: 1px solid #f0f0f0;
+  }
+  
+  .nz-table th, .nz-table td {
+    padding: 12px 8px;
+  }
+  
+  .nz-table {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
