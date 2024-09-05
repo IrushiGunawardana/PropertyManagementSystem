@@ -1,0 +1,51 @@
+<div class="h-screen flex items-center justify-center bg-gray-100 p-6">
+  <form
+    class="shadow-lg rounded-lg bg-white p-8 w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-6"
+    [formGroup]="serviceProviderForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <h1 class="text-3xl font-semibold text-gray-800 mb-6 col-span-2">Post a Job</h1>
+
+    <!-- Property Field -->
+    <mat-form-field appearance="fill" class="w-full mb-6 col-span-2">
+      <mat-label>Search Service Providers</mat-label>
+      <input
+        matInput
+        placeholder="Search Service Providers"
+        formControlName="serviceProvider"
+        [matAutocomplete]="auto"
+        type="search"
+      />
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayServiceProvider">
+        <mat-option
+          *ngFor="let provider of filteredServiceProviders$ | async"
+          [value]="provider"
+          (onSelectionChange)="onServiceProviderSelected($event, provider)"
+        >
+          {{ provider.companyName }}
+        </mat-option>
+      </mat-autocomplete>
+      <mat-icon matPrefix>search</mat-icon>
+    </mat-form-field>
+
+    <!-- Company Name Field -->
+    <mat-form-field appearance="fill" class="w-full mb-6 col-span-1">
+      <mat-label>Company Name</mat-label>
+      <input matInput formControlName="companyName" readonly />
+    </mat-form-field>
+
+    <!-- Email Field -->
+    <mat-form-field appearance="fill" class="w-full mb-6 col-span-1">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" readonly />
+    </mat-form-field>
+
+    <!-- Post Job Button -->
+    <button
+      type="submit"
+      class="bg-blue-600 hover:bg-blue-800 text-white font-semibold py-3 px-6 rounded-lg col-span-2 transition duration-300"
+    >
+      Post Job
+    </button>
+  </form>
+</div>
