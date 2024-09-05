@@ -1,0 +1,89 @@
+<div class="h-screen flex items-center justify-center bg-gray-100 p-4">
+  <form
+    class="shadow-lg rounded-lg bg-white p-8 w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-6"
+    [formGroup]="jobDetailsForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <h2 class="text-3xl font-semibold text-gray-800 mb-8 text-center col-span-2">Post a Job</h2>
+
+    <!-- Property Field -->
+    <mat-form-field appearance="fill" class="w-full col-span-2">
+      <mat-label>Search Property</mat-label>
+      <input
+        matInput
+        placeholder="Search Property"
+        formControlName="property"
+        [matAutocomplete]="auto"
+        type="search"
+      />
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayProperty">
+        <mat-option
+          *ngFor="let property of filteredProperties$ | async"
+          [value]="property"
+          (onSelectionChange)="onPropertySelected($event, property)"
+        >
+          {{ property.address }}
+        </mat-option>
+      </mat-autocomplete>
+      <mat-icon matPrefix>search</mat-icon>
+    </mat-form-field>
+
+    <!-- Owner List -->
+    <div class="w-full col-span-1">
+      <mat-label class="block mb-2 text-lg font-medium text-gray-700">Owner</mat-label>
+      <mat-list>
+        <ng-container *ngIf="owners.length; else noOwners">
+          <mat-list-item *ngFor="let owner of owners" class="list-item">
+            {{ owner.firstName }} {{ owner.lastName }}
+          </mat-list-item>
+        </ng-container>
+        <ng-template #noOwners>
+          <mat-list-item class="list-item">
+            No owners for now.
+          </mat-list-item>
+        </ng-template>
+      </mat-list>
+    </div>
+
+    <!-- Tenant List -->
+    <div class="w-full col-span-1">
+      <mat-label class="block mb-2 text-lg font-medium text-gray-700">Tenant</mat-label>
+      <mat-list>
+        <ng-container *ngIf="tenants.length; else noTenants">
+          <mat-list-item *ngFor="let tenant of tenants" class="list-item">
+            {{ tenant.firstName }} {{ tenant.lastName }}
+          </mat-list-item>
+        </ng-container>
+        <ng-template #noTenants>
+          <mat-list-item class="list-item">
+            No tenants for now.
+          </mat-list-item>
+        </ng-template>
+      </mat-list>
+    </div>
+
+    <!-- Description Field -->
+    <mat-form-field appearance="fill" class="w-full col-span-2">
+      <mat-label>Description</mat-label>
+      <textarea matInput placeholder="Enter job description" formControlName="description" rows="4"></textarea>
+    </mat-form-field>
+
+    <!-- Type Field -->
+    <mat-form-field appearance="fill" class="w-full col-span-2">
+      <mat-label>Type</mat-label>
+      <mat-select formControlName="type" placeholder="Select Job Type">
+        <mat-option *ngFor="let jobType of jobTypes" [value]="jobType.id">
+          {{ jobType.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Next Button -->
+    <button
+      type="submit"
+      class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg col-span-2 transition ease-in-out duration-300"
+    >
+      Next
+    </button>
+  </form>
+</div>
