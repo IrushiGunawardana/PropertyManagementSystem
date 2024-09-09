@@ -1,0 +1,42 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+
+// Include the common styles for Angular Material.
+@include mat.core();
+
+// Define the color palettes for your theme using Material Design's available palettes.
+$property-management-primary: mat.define-palette(mat.$blue-palette, 500, 300, 700); // Primary color
+$property-management-accent: mat.define-palette(mat.$amber-palette, A200, A100, A400);
+$property-management-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object.
+$property-management-theme: mat.define-light-theme((
+  color: (
+    primary: $property-management-primary,
+    accent: $property-management-accent,
+    warn: $property-management-warn,
+  ),
+  typography: mat.define-typography-config(),
+  density: 0,
+));
+
+// Include theme styles for core and each component used in your app.
+@include mat.all-component-themes($property-management-theme);
+
+// Custom button styles using the primary color
+.mat-button {
+  background-color: mat.get-color-from-palette($property-management-primary);
+  color: mat.get-color-from-palette($property-management-primary, 100); // Light text color
+}
+
+.mat-button:hover {
+  background-color: mat.get-color-from-palette($property-management-primary, 600); // Darker shade on hover
+}
+
+.mat-button.disabled {
+  background-color: mat.get-color-from-palette($property-management-primary, 200); // Lighter shade when disabled
+  color: mat.get-color-from-palette($property-management-primary, 100); // Light text color
+}
+
+// Additional button styles if needed
