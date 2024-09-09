@@ -1,0 +1,115 @@
+<div class="h-screen flex items-center justify-center bg-gray-200 py-8">
+  <form
+    class="shadow-lg rounded-lg p-8 bg-white max-w-4xl w-full grid grid-cols-1 md:grid-cols-2 gap-6"
+    [formGroup]="registerForm"
+    (ngSubmit)="register()"
+  >
+    <!-- Error Messages -->
+    <div *ngFor="let error of errors" class="bg-red-100 border border-red-400 text-red-600 px-4 py-2 rounded-md mb-4 col-span-2">
+      <div class="text-sm">{{ error.description }}</div>
+    </div>
+
+    <!-- Header -->
+    <div class="mb-6 text-center col-span-2">
+      <h1 class="text-3xl font-bold text-gray-800 mb-2">Register</h1>
+      <h6 class="text-gray-600 text-sm">Create your account</h6>
+    </div>
+
+    <!-- Username -->
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>Username</mat-label>
+      <input matInput placeholder="Username" formControlName="userName" />
+      <mat-icon matPrefix>person</mat-icon>
+    </mat-form-field>
+
+    <!-- Email -->
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>Email</mat-label>
+      <input matInput placeholder="Email" formControlName="email" />
+      <mat-icon matPrefix>email</mat-icon>
+    </mat-form-field>
+
+    <!-- First Name -->
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>First Name</mat-label>
+      <input matInput placeholder="First Name" formControlName="firstName" />
+      <mat-icon matPrefix>badge</mat-icon>
+    </mat-form-field>
+
+    <!-- Last Name -->
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>Last Name</mat-label>
+      <input matInput placeholder="Last Name" formControlName="lastName" />
+      <mat-icon matPrefix>badge</mat-icon>
+    </mat-form-field>
+
+    <!-- Company Name -->
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>Company Name</mat-label>
+      <input matInput placeholder="Company Name" formControlName="companyName" />
+      <mat-icon matPrefix>business</mat-icon>
+    </mat-form-field>
+
+    <!-- Address -->
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>Address</mat-label>
+      <input matInput placeholder="Address" formControlName="address" />
+      <mat-icon matPrefix>home</mat-icon>
+    </mat-form-field>
+
+    <!-- Password -->
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>Password</mat-label>
+      <input
+        matInput
+        [type]="passwordHide ? 'password' : 'text'"
+        formControlName="password"
+        placeholder="Password"
+      />
+      <mat-icon matPrefix>lock</mat-icon>
+      <mat-icon (click)="passwordHide = !passwordHide" matSuffix>
+        {{ passwordHide ? 'visibility_off' : 'visibility' }}
+      </mat-icon>
+    </mat-form-field>
+
+    <!-- Confirm Password -->
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>Confirm Password</mat-label>
+      <input
+        matInput
+        [type]="confirmPasswordHide ? 'password' : 'text'"
+        formControlName="confirmPassword"
+        placeholder="Confirm Password"
+      />
+      <mat-icon matPrefix>lock</mat-icon>
+      <mat-icon (click)="confirmPasswordHide = !confirmPasswordHide" matSuffix>
+        {{ confirmPasswordHide ? 'visibility_off' : 'visibility' }}
+      </mat-icon>
+    </mat-form-field>
+
+    <!-- Password Mismatch Warning -->
+    <span
+      *ngIf="registerForm.hasError('passwordMismatch') && registerForm.get('confirmPassword')?.dirty && registerForm.get('confirmPassword')?.touched"
+      class="text-red-600 text-sm mb-4 col-span-2"
+    >
+      Passwords do not match.
+    </span>
+
+    <!-- Submit Button -->
+    <button
+      type="submit"
+      [disabled]="!registerForm.valid"
+      class="w-full py-2 px-4 text-white bg-purple-700 rounded-md hover:bg-purple-800 focus:outline-none focus:ring-2 focus:ring-purple-500 disabled:bg-purple-400 transition duration-300 col-span-2"
+    >
+      Register
+    </button>
+
+    <!-- Login Link -->
+    <div class="text-center mt-6 col-span-2">
+      <span class="text-gray-600 text-sm">Already have an account?</span>
+      <a class="text-purple-700 font-medium hover:text-purple-800" [routerLink]="['/login']">
+        Login
+      </a>
+    </div>
+  </form>
+</div>
