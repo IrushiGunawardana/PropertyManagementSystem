@@ -9,7 +9,7 @@ import { RegisterComponent } from './components/user-register/user-register.comp
 
 export const routes: Routes = [
     {
-        path: '',
+        path: 'dashboard',
         component:DashboardComponent,
       },
       {
@@ -37,5 +37,9 @@ export const routes: Routes = [
         path: 'jobdetails/:id',
         component:JobDetailsComponent,
       },
+      {
+        path:'',
+        component:HomeComponent,
+      }
 
 ];
