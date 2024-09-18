@@ -18,11 +18,11 @@ namespace PropertyManagementSystem.Services
         }
 
         // Method to get service providers based on a job type
-        public async Task<List<ServiceProviderDetailsDto>> GetServiceProvideryAsync(string jobType)
+        public async Task<List<ServiceProviderDetailsDto>> GetServiceProvideryAsync(Guid jobType)
         {
             // Querying the database to find service providers related to a specific job type
             var serviceproviders = await _context.ServiceProviderJobTypes
-                .Where(Type => Type.JobTypeId.ToString().Equals(jobType)) // Filter based on the job type ID
+                .Where(Type => Type.JobTypeId.Equals(jobType)) // Filter based on the job type ID
                 .Select(jt => new ServiceProviderDetailsDto // Map the results to ServiceProviderDetailsDto
                 {
                     Id = jt.ServiceProvider.Id,

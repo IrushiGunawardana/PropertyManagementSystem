@@ -32,10 +32,10 @@ namespace PropertyManagementSystem.Services
         }
 
         // Method to get a list of properties managed by a specific user (Property Manager)
-        public async Task<List<PropertyListDto>> GetPropertyAsync(string userId)
+        public async Task<List<PropertyListDto>> GetPropertyAsync(Guid userId)
         {
             // Retrieve the list of PropertyManagers based on the provided userId
-            var propertyManageList = await _context.PropertyManagers.Where(pm => pm.UserId.ToString() == userId).ToListAsync();
+            var propertyManageList = await _context.PropertyManagers.Where(pm => pm.UserId == userId).ToListAsync();
 
             // Throw an exception if no PropertyManager is found for the given userId
             if (propertyManageList.Count == 0)

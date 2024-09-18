@@ -8,9 +8,9 @@ namespace PropertyManagementSystem.Services.Interfaces
     {
         Task<List<JobTypesDto>> GetJobTypesAsync();
 
-        Task<SingleJobDto> GetJobByIdAsync(String userId, string jobId);
+        Task<SingleJobDto> GetJobByIdAsync(string userId, string jobId);
 
-        Task<List<JobListDto>> GetAllJobsAsync(String userId);
+        Task<List<JobListDto>> GetAllJobsAsync(string userId);
 
         Task<Models.Schema.Job> CreateJobAsync(string userId, CreateJobRequestDto model);
 

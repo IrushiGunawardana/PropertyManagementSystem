@@ -7,6 +7,6 @@ namespace PropertyManagementSystem.Services.Interfaces
     {
         Task<Guid> CreatePropertyAsync(string address);
 
-        Task<List<PropertyListDto>> GetPropertyAsync(String userId);
+        Task<List<PropertyListDto>> GetPropertyAsync(Guid userId);
     }
 }

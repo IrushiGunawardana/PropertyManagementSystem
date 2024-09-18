@@ -27,8 +27,9 @@ namespace PropertyManagementSystem.Controllers
         [HttpGet("getserviceproviderdetails")] 
         public async Task<IActionResult> GetDetails([FromQuery] string jobType)
         {
+            
             // Retrieve service provider details asynchronously by calling the service layer
-            var serviceProviderDetails = await _serviceProviderService.GetServiceProvideryAsync(jobType);
+            var serviceProviderDetails = await _serviceProviderService.GetServiceProvideryAsync(Guid.Parse(jobType));
 
             // Return an Ok response with a CommonResponseDto that contains the message and data
             return Ok(new CommonResponseDto

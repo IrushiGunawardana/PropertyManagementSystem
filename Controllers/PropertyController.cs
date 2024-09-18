@@ -29,7 +29,7 @@ namespace PropertyManagementSystem.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             // Calls the service to get properties associated with the user
-            var properties = await _propertyService.GetPropertyAsync(userId);
+            var properties = await _propertyService.GetPropertyAsync(Guid.Parse(userId));
 
             // Returns a successful response with the list of properties
             return Ok(new CommonResponseDto
