@@ -9,6 +9,8 @@ import { JobPostWizardsJobDetailsComponent } from './components/job-post-wizards
 import { JobPostWizardsServiceProviderComponent } from './components/job-post-wizards-service-provider/job-post-wizards-service-provider.component';
 import { RegisterComponent } from './components/user-register/user-register.component';
 
+import { CookieService } from 'ngx-cookie-service';
+
 
 @Component({
   selector: 'app-root',
@@ -31,4 +33,28 @@ import { RegisterComponent } from './components/user-register/user-register.comp
 })
 export class AppComponent {
   title = 'PropertyManagementSystem';
-}
+
+  private cookie_name='';
+  private all_cookies:any='';
+
+  constructor(private cookieService:CookieService){
+
+  }
+    setCookie(){
+      this.cookieService.set('name','PropertyManagementSystem');
+    }
+     
+    deleteCookie(){
+      this.cookieService.delete('name');
+    }
+     
+    deleteAll(){
+      this.cookieService.deleteAll();
+      
+    }
+     
+    ngOnInit(): void {
+    this.cookie_name=this.cookieService.get('name');
+    this.all_cookies=this.cookieService.getAll();  // get all cookies object
+        }
+    }
