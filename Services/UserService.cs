@@ -73,7 +73,7 @@ namespace PropertyManagementSystem.Services.Interfaces
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.AddMinutes(1),  // Token expiration time (60 minutes).
+                Expires = DateTime.UtcNow.AddMinutes(60),  // Token expiration time (60 minutes).
                 Issuer = _configuration["JWTSetting:Issuer"],  // JWT issuer.
                 Audience = _configuration["JWTSetting:Audience"],  // JWT audience.
                 SigningCredentials = creds  // Token signing credentials.
