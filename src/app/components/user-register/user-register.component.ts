@@ -80,7 +80,7 @@ export class RegisterComponent implements OnInit {
         firstName: ['', Validators.required],
         lastName: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
-        role: ['', Validators.required],
+        role: [''],
         companyName: [''],
         address: ['', Validators.required],
       },
