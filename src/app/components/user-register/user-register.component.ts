@@ -6,7 +6,6 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { RoleService } from '../../services/role.service';
 import { Observable } from 'rxjs';
 
 import { MatIconModule } from '@angular/material/icon';
@@ -18,7 +17,7 @@ import { AuthService } from '../../services/auth.service';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ValidationError } from '../../models/validation-error';
-import { Role } from '../../models/role';
+
 
 @Component({
   selector: 'app-user-register',
@@ -37,10 +36,8 @@ import { Role } from '../../models/role';
   styleUrls: ['./user-register.component.css'],
 })
 export class RegisterComponent implements OnInit {
-  roleService = inject(RoleService);
   authService = inject(AuthService);
   matSnackbar = inject(MatSnackBar);
-  roles$!: Observable<Role[]>;
   fb = inject(FormBuilder);
   registerForm!: FormGroup;
   router = inject(Router);
@@ -80,7 +77,6 @@ export class RegisterComponent implements OnInit {
         firstName: ['', Validators.required],
         lastName: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
-        role: [''],
         companyName: [''],
         address: ['', Validators.required],
       },
@@ -89,7 +85,6 @@ export class RegisterComponent implements OnInit {
       }
     );
 
-    this.roles$ = this.roleService.getRoles();
   }
 
   private passwordMatchValidator(
