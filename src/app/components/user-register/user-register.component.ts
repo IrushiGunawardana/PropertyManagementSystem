@@ -5,8 +5,8 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ValidationError } from '../../models/validation-error';
-
-// Import Angular Material modules
+import { Role } from '../../models/role';
+import { Observable } from 'rxjs';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
@@ -34,7 +34,6 @@ export class RegisterComponent implements OnInit {
   passwordHide: boolean = true;
   confirmPasswordHide: boolean = true;
 
-  // Use Angular's inject function
   authService = inject(AuthService);
   router = inject(Router);
   matSnackBar = inject(MatSnackBar);
@@ -48,6 +47,7 @@ export class RegisterComponent implements OnInit {
         firstName: ['', Validators.required],
         lastName: ['', Validators.required],
         companyName: [''],
+        role: ['Property Manager'], // Set default role
         address: ['', Validators.required],
         password: ['', [Validators.required, Validators.minLength(6)]],
         confirmPassword: ['', Validators.required],
@@ -59,17 +59,13 @@ export class RegisterComponent implements OnInit {
   passwordMatchValidator(control: AbstractControl): { [key: string]: boolean } | null {
     const password = control.get('password')?.value;
     const confirmPassword = control.get('confirmPassword')?.value;
-    if (password !== confirmPassword) {
-      return { passwordMismatch: true };
-    }
-    return null;
+    return password !== confirmPassword ? { passwordMismatch: true } : null;
   }
 
   register(): void {
     if (this.registerForm.valid) {
       this.authService.register(this.registerForm.value).subscribe({
         next: (response) => {
-          console.log(response);
           this.matSnackBar.open(response.message, 'Close', {
             duration: 5000,
             horizontalPosition: 'center',
