@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, RouterLink } from '@angular/router';
@@ -6,7 +6,7 @@ import { AuthService } from '../../services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ValidationError } from '../../models/validation-error';
 
-// Import Angular Material and CommonModule modules
+// Import Angular Material modules
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
@@ -21,11 +21,11 @@ import { AsyncPipe, CommonModule } from '@angular/common';
   imports: [
     // Add all required modules to the imports array
     MatInputModule,
-    ReactiveFormsModule,
-    RouterLink,
     MatSelectModule,
     MatIconModule,
     MatSnackBarModule,
+    ReactiveFormsModule,
+    RouterLink,
     AsyncPipe,
     CommonModule
   ]
@@ -46,7 +46,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     this.registerForm = this.fb.group(
       {
-        userName: ['', Validators.required],
+        userName: ['', [Validators.required, Validators.minLength(3)]],
         email: ['', [Validators.required, Validators.email]],
         firstName: ['', Validators.required],
         lastName: ['', Validators.required],
@@ -55,7 +55,7 @@ export class RegisterComponent implements OnInit {
         password: ['', [Validators.required, Validators.minLength(6)]],
         confirmPassword: ['', Validators.required],
       },
-      { validator: this.passwordMatchValidator }
+      { validators: this.passwordMatchValidator }
     );
   }
 

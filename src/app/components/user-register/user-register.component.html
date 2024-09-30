@@ -15,13 +15,13 @@
       <h6 class="text-gray-600 text-sm">Create your account</h6>
     </div>
 
-    <!-- Form Fields -->
-
     <!-- Username -->
     <mat-form-field appearance="fill" class="w-full">
       <mat-label>Username</mat-label>
       <input matInput placeholder="Username" formControlName="userName" />
       <mat-icon matPrefix>person</mat-icon>
+      <mat-error *ngIf="registerForm.get('userName')?.hasError('required')">Username is required</mat-error>
+      <mat-error *ngIf="registerForm.get('userName')?.hasError('minlength')">Username must be at least 3 characters long</mat-error>
     </mat-form-field>
 
     <!-- Email -->
@@ -29,6 +29,8 @@
       <mat-label>Email</mat-label>
       <input matInput placeholder="Email" formControlName="email" />
       <mat-icon matPrefix>email</mat-icon>
+      <mat-error *ngIf="registerForm.get('email')?.hasError('required')">Email is required</mat-error>
+      <mat-error *ngIf="registerForm.get('email')?.hasError('email')">Invalid email format</mat-error>
     </mat-form-field>
 
     <!-- First Name -->
@@ -36,6 +38,7 @@
       <mat-label>First Name</mat-label>
       <input matInput placeholder="First Name" formControlName="firstName" />
       <mat-icon matPrefix>badge</mat-icon>
+      <mat-error *ngIf="registerForm.get('firstName')?.hasError('required')">First name is required</mat-error>
     </mat-form-field>
 
     <!-- Last Name -->
@@ -43,6 +46,7 @@
       <mat-label>Last Name</mat-label>
       <input matInput placeholder="Last Name" formControlName="lastName" />
       <mat-icon matPrefix>badge</mat-icon>
+      <mat-error *ngIf="registerForm.get('lastName')?.hasError('required')">Last name is required</mat-error>
     </mat-form-field>
 
     <!-- Company Name -->
@@ -57,6 +61,7 @@
       <mat-label>Address</mat-label>
       <input matInput placeholder="Address" formControlName="address" />
       <mat-icon matPrefix>home</mat-icon>
+      <mat-error *ngIf="registerForm.get('address')?.hasError('required')">Address is required</mat-error>
     </mat-form-field>
 
     <!-- Password -->
@@ -67,6 +72,8 @@
       <mat-icon (click)="passwordHide = !passwordHide" matSuffix>
         {{ passwordHide ? 'visibility_off' : 'visibility' }}
       </mat-icon>
+      <mat-error *ngIf="registerForm.get('password')?.hasError('required')">Password is required</mat-error>
+      <mat-error *ngIf="registerForm.get('password')?.hasError('minlength')">Password must be at least 6 characters</mat-error>
     </mat-form-field>
 
     <!-- Confirm Password -->
@@ -77,6 +84,7 @@
       <mat-icon (click)="confirmPasswordHide = !confirmPasswordHide" matSuffix>
         {{ confirmPasswordHide ? 'visibility_off' : 'visibility' }}
       </mat-icon>
+      <mat-error *ngIf="registerForm.hasError('passwordMismatch')">Passwords do not match</mat-error>
     </mat-form-field>
 
     <!-- Password Mismatch Warning -->
