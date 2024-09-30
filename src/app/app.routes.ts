@@ -6,36 +6,39 @@ import { JobPostWizardsJobDetailsComponent } from './components/job-post-wizards
 import { JobPostWizardsServiceProviderComponent } from './components/job-post-wizards-service-provider/job-post-wizards-service-provider.component';
 import { JobDetailsComponent } from './components/job-details/job-details.component';
 import { RegisterComponent } from './components/user-register/user-register.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
     {
         path: 'dashboard',
         component:DashboardComponent,
+        canActivate :[authGuard],
       },
       {
         path: 'login',
         component: UserLoginComponent,
+
       },
       {
         path: 'register',
         component: RegisterComponent,
+        canActivate :[authGuard],
       },
       
       {
-        path: 'dashboard',
-        component: DashboardComponent,
-      },
-      {
         path: 'jobpostdetails',
         component:JobPostWizardsJobDetailsComponent,
+        canActivate :[authGuard],
       },
       {
         path: 'serviceproviderdetails',
         component:JobPostWizardsServiceProviderComponent,
+        canActivate :[authGuard],
       },
       {
         path: 'jobdetails/:id',
         component:JobDetailsComponent,
+        canActivate :[authGuard],
       },
       {
         path:'',

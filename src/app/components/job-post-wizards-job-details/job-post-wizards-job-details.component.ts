@@ -96,7 +96,7 @@ export class JobPostWizardsJobDetailsComponent implements OnInit {
 
       console.log(this.jobDetailsForm.value);
 
-      this.router.navigate(['/serviceproviderdetails'], {
+      this.router.navigate(['/serviceproviderdetails'], { //singlton object - input output binding -> data pass
         queryParams: {
           propertyId,
           description,

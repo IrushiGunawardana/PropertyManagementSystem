@@ -68,7 +68,7 @@ export class JobPostWizardsServiceProviderComponent implements OnInit{
       this.route.queryParams.subscribe(params => {
         this.propertyId = params['propertyId'] || null;
         this.description = params['description'] || null;
-        this.jobType = params['jobType'] || null;
+        this.jobType = params['jobType'] || null; 
       });
 
       if(this.jobType !=null) {
@@ -136,7 +136,7 @@ export class JobPostWizardsServiceProviderComponent implements OnInit{
         `Requested Job has been created successfully. Note this is your job number : ${JobNumber} \n Redirecting to dashboard within 3 seconds.`
       )
       .onClick.subscribe(() => {
-        console.log('notification clicked!');
+        console.log('notification clicked!');//delete console.logs
       });
       this.redirectAfterDelay();
       
