@@ -40,7 +40,7 @@ export class AuthService {
         map((response) => {
           // On successful login, store the JWT token in localStorage
           if (response.isSuccess) {
-            localStorage.setItem(this.tokenKey, response.accessToken);
+            localStorage.setItem(this.tokenKey, response.access_token);
           }
           return response; // Return the response as an observable
         })
