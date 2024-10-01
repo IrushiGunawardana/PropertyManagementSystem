@@ -77,13 +77,13 @@ namespace PropertyManagementSystem.Services.Interfaces
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             // Set expiration time: 60 minutes for access token, 7 days for refresh token
-            var expires = isRefreshToken ? DateTime.UtcNow.AddDays(7) : DateTime.UtcNow.AddMinutes(60);
+            var expiresValue = isRefreshToken ? DateTime.UtcNow.AddDays(7) : DateTime.UtcNow.AddMinutes(60);
 
             // Create a token descriptor, which includes claims, expiration time, issuer, audience, and signing credentials.
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = expires, 
+                Expires = expiresValue, 
                 Issuer = _configuration["JWTSetting:Issuer"],  // JWT issuer.
                 Audience = _configuration["JWTSetting:Audience"],  // JWT audience.
                 SigningCredentials = creds  // Token signing credentials.
