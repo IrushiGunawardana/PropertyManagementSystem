@@ -51,17 +51,29 @@ namespace PropertyManagementSystem.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequestDto model)
         {
-            // Calls the LoginAsync method from the IUserService to validate the user's credentials and generate a JWT token if valid.
-            var token = await _userService.LoginAsync(model);
+            var tokens = await _userService.LoginAsync(model);
 
-            // If the login is successful and a token is generated, return an HTTP 200 OK status with the token.
-            if (token != null)
+            if (tokens.AccessToken != null)
             {
-                return Ok(new { token });  // Return the JWT token to the client.
+                return Ok(new { AccessToken = tokens.AccessToken, RefreshToken = tokens.RefreshToken });
             }
 
-            // If the login fails (e.g., invalid credentials), return an HTTP 401 Unauthorized status.
             return Unauthorized();
         }
+
+
+        [HttpPost("refresh-token")]
+        public async Task<IActionResult> RefreshToken([FromBody] TokenRequestDto model) //request
+        { 
+            var newAccessToken = await _userService.RefreshTokenAsync(model.RefreshToken);
+
+            if (newAccessToken != null)
+            {
+                return Ok(new { AccessToken = newAccessToken });
+            }
+
+            return Unauthorized("Invalid or expired refresh token.");
+        }
+
     }
 }

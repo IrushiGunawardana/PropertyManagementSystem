@@ -27,7 +27,7 @@ namespace PropertyManagementSystem.Services
             // Save changes to the database asynchronously
             await _context.SaveChangesAsync();
 
-            // Return the ID of the newly created property
+            // Return the ID of the newly created property2
             return property.Id;
         }
 

@@ -29,24 +29,30 @@ namespace PropertyManagementSystem.Services.Interfaces
             _propertyService = propertyService;
         }
 
-        // Handles the user login operation, validating the user's credentials and generating a JWT token.
-        public async Task<string> LoginAsync(LoginRequestDto model)
+        public async Task<(string AccessToken, string RefreshToken)> LoginAsync(LoginRequestDto model)
         {
             // Find user by email (which is used as a username in this case).
             var user = await _userManager.FindByNameAsync(model.Email);
+
             // Check if the user exists and the password is correct.
             if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
-                // Generate a JWT token if login is successful.
-                return GenerateJwtToken(user);
+                // Generate the access token.
+                var accessToken = GenerateJwtToken(user, isRefreshToken: false);
+
+                // Generate the refresh token.
+                var refreshToken = GenerateJwtToken(user, isRefreshToken: true);
+
+                return (accessToken, refreshToken);
             }
 
             // Return null if login failed.
-            return null;
+            return (null, null);
         }
 
+
         // Private method to generate a JWT token for a user. This includes user and manager-specific claims.
-        private string GenerateJwtToken(User user)
+        private string GenerateJwtToken(User user , bool isRefreshToken)
         {
             // Retrieve the PropertyManager associated with the user.
             var manager = _context.PropertyManagers.Where(pm => pm.UserId == user.Id).FirstOrDefault();
@@ -62,12 +68,16 @@ namespace PropertyManagementSystem.Services.Interfaces
                 new Claim("FirstName", manager.FirstName),  // Custom claim for manager's first name.
                 new Claim("LastName", manager.LastName),  // Custom claim for manager's last name.
                 new Claim("email", manager.Email),  // Custom claim for manager's email.
+                new Claim("TokenType", isRefreshToken ? "RefreshToken" : "AccessToken")
             };
 
             // Symmetric security key based on the JWT secret key defined in configuration.
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWTSetting:securityKey"]));
             // Signing credentials using HMAC SHA256 algorithm.
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            // Set expiration time: 60 minutes for access token, 7 days for refresh token
+            var expires = isRefreshToken ? DateTime.UtcNow.AddDays(7) : DateTime.UtcNow.AddMinutes(60);
 
             // Create a token descriptor, which includes claims, expiration time, issuer, audience, and signing credentials.
             var tokenDescriptor = new SecurityTokenDescriptor
@@ -84,6 +94,57 @@ namespace PropertyManagementSystem.Services.Interfaces
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }
+
+        public async Task<string> RefreshTokenAsync(string refreshToken)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.UTF8.GetBytes(_configuration["JWTSetting:securityKey"]);
+
+            try
+            {
+                // Validate token signature and extract principal
+                var principal = tokenHandler.ValidateToken(refreshToken, new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ClockSkew = TimeSpan.Zero
+                }, out SecurityToken validatedToken);
+
+                var jwtToken = validatedToken as JwtSecurityToken;
+
+                // Check if this is a refresh token
+                var tokenType = principal.Claims.FirstOrDefault(x => x.Type == "TokenType")?.Value;
+                if (tokenType != "RefreshToken")
+                    throw new SecurityTokenException("Invalid token type");
+
+                // Check token expiration (if in the last hour, allow refresh)
+                var expiryDateUnix = long.Parse(principal.Claims.First(x => x.Type == JwtRegisteredClaimNames.Exp).Value);
+                var expiryDateTime = DateTimeOffset.FromUnixTimeSeconds(expiryDateUnix).UtcDateTime;
+                var currentUtc = DateTime.UtcNow;
+
+                if (expiryDateTime > currentUtc.AddHours(-1))
+                {
+                    // Token is valid for refresh. Generate a new access token.
+                    var userId = principal.Claims.FirstOrDefault(x => x.Type == "UserId")?.Value;
+                    var user = await _userManager.FindByIdAsync(userId);
+
+                    if (user != null)
+                    {
+                        var newAccessToken = GenerateJwtToken(user, isRefreshToken: false);
+                        return newAccessToken;
+                    }
+                }
+
+                return null; // Token expired
+            }
+            catch
+            {
+                return null; // Token is invalid
+            }
+        }
+
 
         // Handles the registration of a new user with role-based logic for property managers, owners, tenants, and service providers.
         public async Task<IdentityResult> RegisterAsync(RegisterRequestDto model)

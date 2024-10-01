@@ -11,6 +11,7 @@ namespace PropertyManagementSystem.Models.Schema
         [Key]
         public Guid Id { get; set; } = Guid.NewGuid();
 
+   
         public ICollection<PropertyManager> PropertyManagers { get; set; }
         public ICollection<PropertyOwner> PropertyOwners { get; set; }
         public ICollection<PropertyTenant> PropertyTenants { get; set; }
