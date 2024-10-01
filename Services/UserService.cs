@@ -124,7 +124,7 @@ namespace PropertyManagementSystem.Services.Interfaces
                 var expiryDateTime = DateTimeOffset.FromUnixTimeSeconds(expiryDateUnix).UtcDateTime;
                 var currentUtc = DateTime.UtcNow;
 
-                if (expiryDateTime > currentUtc.AddHours(-1))
+                if (expiryDateTime > currentUtc)
                 {
                     // Token is valid for refresh. Generate a new access token.
                     var userId = principal.Claims.FirstOrDefault(x => x.Type == "UserId")?.Value;
