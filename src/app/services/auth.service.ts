@@ -125,4 +125,17 @@ export class AuthService {
       return localStorage.getItem(this.tokenKey) || ''; // Fetch token or return an empty string if not found
     
   };
+
+
+  refreshAccessToken(): Observable<string> {
+    const refreshToken = localStorage.getItem('refreshToken'); // Assuming refresh token is stored separately
+    return this.http
+      .post<{ access_token: string }>(`${this.apiUrl}account/refreshtoken`, {
+        refresh_token: refreshToken,
+      })
+      .pipe(
+        map((response) => response.access_token) // Return the new access token
+      );
+  }
+  
 }
