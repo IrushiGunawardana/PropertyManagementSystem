@@ -128,7 +128,7 @@ export class AuthService {
 
 
   refreshAccessToken(): Observable<string> {
-    const refreshToken = localStorage.getItem('refreshToken'); // Assuming refresh token is stored separately
+    const refreshToken = localStorage.getItem('refresh_token'); // Assuming refresh token is stored separately
     return this.http
       .post<{ access_token: string }>(`${this.apiUrl}account/refreshtoken`, {
         refresh_token: refreshToken,

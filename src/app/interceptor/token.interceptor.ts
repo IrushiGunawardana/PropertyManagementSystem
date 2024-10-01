@@ -1,7 +1,7 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import jwtDecode from 'jwt-decode';
+import {jwtDecode } from 'jwt-decode';
 
 export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
@@ -16,21 +16,14 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
     if (expirationTime - currentTime <= 3600) {
       // Call the refresh token endpoint if access token is about to expire
       authService.refreshAccessToken().subscribe((newAccessToken) => {
-        accessToken = newAccessToken;
         localStorage.setItem('token', newAccessToken); // Save the new access token in local storage
-
-        const cloned = req.clone({
-          headers: req.headers.set('Authorization', 'Bearer ' + newAccessToken),
-        });
-
-        return next(cloned); // Continue with the new token
       });
-    } else {
-      const cloned = req.clone({
-        headers: req.headers.set('Authorization', 'Bearer ' + accessToken),
-      });
-      return next(cloned); // Continue with the existing token if it's valid
-    }
+    } 
+    const cloned = req.clone({
+      headers: req.headers.set('Authorization', 'Bearer ' + authService.getToken()),
+    });
+
+    return next(cloned); // Continue with the new token
   }
 
   return next(req); // Continue without token if not present
