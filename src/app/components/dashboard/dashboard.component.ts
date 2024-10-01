@@ -67,7 +67,7 @@ export class DashboardComponent implements OnInit {
     this.selectedJob = job;
 
     const url = `/jobdetails/${job.id}`;
-    window.open(url, '_blank');
+    window.open(url, '_self');
 
     // const dialogRef = this.dialog.open(JobDetailsComponent, {
     //   width: '100px',
@@ -90,6 +90,6 @@ export class DashboardComponent implements OnInit {
     //   }
     // });
     const url = `/jobpostdetails`;
-    window.open(url, '_blank');
+    window.open(url, '_self');
   }
 }
