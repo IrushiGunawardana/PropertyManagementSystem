@@ -4,6 +4,11 @@ import { AuthService } from '../services/auth.service';
 import {jwtDecode } from 'jwt-decode';
 
 export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
+  
+  if (req.url.includes('/account/refresh-token')) {
+    return next(req);
+  }
+
   const authService = inject(AuthService);
   let accessToken = authService.getToken();
 
