@@ -55,7 +55,7 @@ namespace PropertyManagementSystem.Controllers
 
             if (tokens.AccessToken != null)
             {
-                return Ok(new { AccessToken = tokens.AccessToken, RefreshToken = tokens.RefreshToken });
+                return Ok(new { access_token = tokens.AccessToken, refresh_token = tokens.RefreshToken });
             }
 
             return Unauthorized();
@@ -69,7 +69,7 @@ namespace PropertyManagementSystem.Controllers
 
             if (newAccessToken != null)
             {
-                return Ok(new { AccessToken = newAccessToken });
+                return Ok(new { access_token = newAccessToken });
             }
 
             return Unauthorized("Invalid or expired refresh token.");
