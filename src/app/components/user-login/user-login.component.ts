@@ -43,8 +43,9 @@ export class UserLoginComponent implements OnInit {
   login() {
     this.authService.login(this.form.value).subscribe({
       next: (response) => {
-        if (response.token) {
-          localStorage.setItem('token', response.token);
+        if (response.accessToken) {
+          localStorage.setItem('token', response.accessToken);
+          localStorage.setItem('refresh_token', response.refreshToken);
           console.log('User logged in successfully:', response);
 
           this.router.navigate(['/dashboard']); 
