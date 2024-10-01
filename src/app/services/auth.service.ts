@@ -131,7 +131,7 @@ export class AuthService {
     const refreshToken = localStorage.getItem('refresh_token'); // Assuming refresh token is stored separately
     return this.http
       .post<{ access_token: string }>(`${this.apiUrl}account/refresh-token`, {
-        refresh_token: refreshToken,
+        RefreshToken: refreshToken,
       })
       .pipe(
         map((response) => response.access_token) // Return the new access token
