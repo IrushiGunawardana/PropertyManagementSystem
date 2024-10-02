@@ -103,19 +103,19 @@ namespace PropertyManagementSystem.Services
         }
 
         // Creates a new job and saves it to the database
-        public async Task<Models.Schema.Job> CreateJobAsync(string userId, CreateJobRequestDto model)
+        public async Task<Models.Schema.Job> CreateJobAsync(string userId, CreateJobRequestDto request)
         {
             // Creates a new Job object and generates a unique job number
             var JobPost = new Models.Schema.Job
             {
                 Id = Guid.NewGuid(),
                 JobNumber = await GenerateUniqueJobNumberAsync(),
-                PropertyId = model.PropertyId,
+                PropertyId = request.PropertyId,
                 PostedByUserId = Guid.Parse(userId),
                 PostedOn = DateTime.Now,
-                Description = model.Description,
-                TypeId = model.Type,
-                ServiceProviderId = model.ServiceProviderId
+                Description = request.Description,
+                TypeId = request.Type,
+                ServiceProviderId = request.ServiceProviderId
             };
 
             // Adds the new job to the context and saves changes
@@ -128,21 +128,30 @@ namespace PropertyManagementSystem.Services
         // Generates a unique six-digit job number for each job
         public async Task<int> GenerateUniqueJobNumberAsync()
         {
-            int jobNumber;
-            Random random = new Random();
-            do
-            {
-                // Generates a random job number between 100000 and 999999
-                jobNumber = random.Next(100000, 999999);
-            }
-            // Ensures the generated number is unique by checking the database
-            while (await _context.Jobs.AnyAsync(j => j.JobNumber == jobNumber));
+            // Get the maximum job number currently in the database
+            var maxJobNumber = await _context.Jobs.MaxAsync(j => (int?)j.JobNumber) ?? 100000;
 
-            return jobNumber;
+            // Increment the job number by 1
+            int jobNumber = maxJobNumber + 1;
+
+            // Ensure the job number is unique by checking the database and is less than or equal to 999999
+            while (jobNumber <= 999999 && await _context.Jobs.AnyAsync(j => j.JobNumber == jobNumber))
+            {
+                jobNumber++; // Increment to find the next available job number
+            }
+
+            // Check if the job number exceeds the maximum allowed (999999)
+            if (jobNumber > 999999)
+            {
+                throw new InvalidOperationException("All job numbers have been assigned. Cannot generate a new job number.");
+            }
+
+            return jobNumber; // Return the unique job number
         }
 
+
         // Validates the job request by ensuring the property manager, property, provider, and job type are valid
-        public async Task<bool> isValid(string userId, CreateJobRequestDto model)
+        public async Task<bool> isValid(string userId, CreateJobRequestDto request)
         {
             // Validates the property manager based on user ID
             var propertyManager = await _context.PropertyManagers.FirstOrDefaultAsync(pm => pm.UserId.ToString() == userId);
@@ -162,7 +171,7 @@ namespace PropertyManagementSystem.Services
             }
 
             // Validates the service provider
-            var provider = await _context.ServiceProviders.Where(provider => provider.Id == model.ServiceProviderId).FirstOrDefaultAsync();
+            var provider = await _context.ServiceProviders.Where(provider => provider.Id == request.ServiceProviderId).FirstOrDefaultAsync();
 
             if (provider == null)
             {
@@ -170,7 +179,7 @@ namespace PropertyManagementSystem.Services
             }
 
             // Validates the job type
-            var jobtype = await _context.JobTypes.Where(job => job.Id == model.Type).FirstOrDefaultAsync();
+            var jobtype = await _context.JobTypes.Where(job => job.Id == request.Type).FirstOrDefaultAsync();
 
             if (jobtype == null)
             {
