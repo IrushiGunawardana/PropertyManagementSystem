@@ -29,7 +29,7 @@ import { MatTableDataSource } from '@angular/material/table';
   ]
 })
 export class DashboardComponent implements OnInit {
-  
+
   jobs: JobDto[] = [];
   displayedColumns: string[] = ['jobNumber', 'description', 'postedDate'];
   selectedJob: JobDto | null = null;
@@ -37,14 +37,14 @@ export class DashboardComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private router: Router, private jobService: JobService, private authService: AuthService, private dialog: MatDialog) {}
+  constructor(private router: Router, private jobService: JobService, private authService: AuthService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
 
-    if(this.authService.isLoggedIn()){
+    if (this.authService.isLoggedIn()) {
       this.loadJobs();
     }
-    else{
+    else {
       this.router.navigate(['/login']);
     }
 

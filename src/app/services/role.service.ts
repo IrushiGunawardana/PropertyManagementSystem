@@ -11,7 +11,7 @@ import { Role } from '../models/role';
 export class RoleService {
   apiUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getRoles = (): Observable<Role[]> =>
     this.http.get<Role[]>(`${this.apiUrl}roles`);

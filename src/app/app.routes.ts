@@ -9,40 +9,40 @@ import { RegisterComponent } from './components/user-register/user-register.comp
 import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
-    {
-        path: 'dashboard',
-        component:DashboardComponent,
-        canActivate :[authGuard],
-      },
-      {
-        path: 'login',
-        component: UserLoginComponent,
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'login',
+    component: UserLoginComponent,
 
-      },
-      {
-        path: 'register',
-        component: RegisterComponent,
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
 
-      },
-      
-      {
-        path: 'jobpostdetails',
-        component:JobPostWizardsJobDetailsComponent,
-        canActivate :[authGuard],
-      },
-      {
-        path: 'serviceproviderdetails',
-        component:JobPostWizardsServiceProviderComponent,
-        canActivate :[authGuard],
-      },
-      {
-        path: 'jobdetails/:id',
-        component:JobDetailsComponent,
-        canActivate :[authGuard],
-      },
-      {
-        path:'',
-        component:HomeComponent,
-      }
+  },
+
+  {
+    path: 'jobpostdetails',
+    component: JobPostWizardsJobDetailsComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'serviceproviderdetails',
+    component: JobPostWizardsServiceProviderComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'jobdetails/:id',
+    component: JobDetailsComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: '',
+    component: HomeComponent,
+  }
 
 ];

@@ -31,13 +31,13 @@
         <!-- Header Row -->
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <!-- Data Row -->
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;" 
-            class="cursor-pointer hover:bg-gray-50 transition duration-200"
-            (click)="openJobDetailModal(row)"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+          class="cursor-pointer hover:bg-gray-50 transition duration-200" (click)="openJobDetailModal(row)"></tr>
       </table>
     </div>
 
     <!-- Pagination -->
-    <mat-paginator [length]="dataSource.data.length" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    <mat-paginator [length]="dataSource.data.length" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons></mat-paginator>
   </div>
 </div>

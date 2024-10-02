@@ -47,7 +47,7 @@ export class RegisterComponent implements OnInit {
         firstName: ['', Validators.required],
         lastName: ['', Validators.required],
         companyName: [''],
-        role: ['Property Manager'], 
+        role: ['Property Manager'],
         address: ['', Validators.required],
         password: ['', [Validators.required, Validators.minLength(6)]],
         confirmPassword: ['', Validators.required],
@@ -74,7 +74,7 @@ export class RegisterComponent implements OnInit {
         },
         error: (err: HttpErrorResponse) => {
           if (err.status === 400) {
-            this.errors = err.error; 
+            this.errors = err.error;
             this.matSnackBar.open('Validation error', 'Close', {
               duration: 5000,
               horizontalPosition: 'center',

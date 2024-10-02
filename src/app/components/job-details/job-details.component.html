@@ -1,5 +1,6 @@
 <div class="h-screen flex items-center justify-center bg-gray-100 p-6">
-  <form [formGroup]="form" class="w-full max-w-2xl bg-white rounded-lg shadow-lg p-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+  <form [formGroup]="form"
+    class="w-full max-w-2xl bg-white rounded-lg shadow-lg p-8 grid grid-cols-1 md:grid-cols-2 gap-6">
     <h1 class="text-3xl font-semibold text-gray-800 mb-6 col-span-full text-center">Job Details</h1>
 
     <!-- Property Field (Full Width) -->
@@ -40,7 +41,8 @@
 
     <!-- Back Button (Full Width) -->
     <div class="flex justify-end col-span-full mt-6">
-      <button mat-raised-button color="primary" (click)="back()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out">
+      <button mat-raised-button color="primary" (click)="back()"
+        class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out">
         Back
       </button>
     </div>

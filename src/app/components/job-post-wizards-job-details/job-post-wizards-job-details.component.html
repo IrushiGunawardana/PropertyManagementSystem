@@ -1,27 +1,15 @@
 <div class="h-screen flex items-center justify-center bg-gray-100 p-4">
-  <form
-    class="shadow-lg rounded-lg bg-white p-8 w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-6"
-    [formGroup]="jobDetailsForm"
-    (ngSubmit)="onSubmit()"
-  >
+  <form class="shadow-lg rounded-lg bg-white p-8 w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-6"
+    [formGroup]="jobDetailsForm" (ngSubmit)="onSubmit()">
     <h2 class="text-3xl font-semibold text-gray-800 mb-8 text-center col-span-2">Post a Job</h2>
 
     <!-- Property Field -->
     <mat-form-field appearance="fill" class="w-full col-span-2">
       <mat-label>Search Property</mat-label>
-      <input
-        matInput
-        placeholder="Search Property"
-        formControlName="property"
-        [matAutocomplete]="auto"
-        type="search"
-      />
+      <input matInput placeholder="Search Property" formControlName="property" [matAutocomplete]="auto" type="search" />
       <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayProperty">
-        <mat-option
-          *ngFor="let property of filteredProperties$ | async"
-          [value]="property"
-          (onSelectionChange)="onPropertySelected($event, property)"
-        >
+        <mat-option *ngFor="let property of filteredProperties$ | async" [value]="property"
+          (onSelectionChange)="onPropertySelected($event, property)">
           {{ property.address }}
         </mat-option>
       </mat-autocomplete>
@@ -79,10 +67,8 @@
     </mat-form-field>
 
     <!-- Next Button -->
-    <button
-      type="submit"
-      class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg col-span-2 transition ease-in-out duration-300"
-    >
+    <button type="submit"
+      class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg col-span-2 transition ease-in-out duration-300">
       Next
     </button>
   </form>

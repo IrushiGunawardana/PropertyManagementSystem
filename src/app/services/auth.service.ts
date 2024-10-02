@@ -15,10 +15,10 @@ import { RegisterRequest } from '../models/register-request';
 export class AuthService {
   // Base API URL from environment config
   apiUrl: string = environment.apiUrl;
-  
+
   // Key to store/retrieve token from local storage
   private tokenKey = 'token';
-  
+
   // Flag to determine if code is running in a browser environment
   isBrowser: boolean = false;
 
@@ -120,10 +120,10 @@ export class AuthService {
    * Retrieves the stored JWT token from localStorage, if available.
    * @returns string - The stored JWT token, or an empty string if not available
    */
-  getToken = (): string |null => {
-    
-      return localStorage.getItem(this.tokenKey) || ''; // Fetch token or return an empty string if not found
-    
+  getToken = (): string | null => {
+
+    return localStorage.getItem(this.tokenKey) || ''; // Fetch token or return an empty string if not found
+
   };
 
 
@@ -137,5 +137,5 @@ export class AuthService {
         map((response) => response.access_token) // Return the new access token
       );
   }
-  
+
 }

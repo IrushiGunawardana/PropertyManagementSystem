@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCardModule } from '@angular/material/card';
 import { ActivatedRoute } from '@angular/router';
-import { JobService } from '../../services/job.service'; 
+import { JobService } from '../../services/job.service';
 import { ServiceProviderDto } from '../../models/service-provider-response';
 import { Router } from '@angular/router';
 import { Observable, startWith, map } from 'rxjs';
@@ -36,7 +36,7 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
   templateUrl: './job-post-wizards-service-provider.component.html',
   styleUrls: ['./job-post-wizards-service-provider.component.css']
 })
-export class JobPostWizardsServiceProviderComponent implements OnInit{
+export class JobPostWizardsServiceProviderComponent implements OnInit {
   serviceProviderForm: FormGroup;
   filteredServiceProviders$: Observable<ServiceProviderDto[]> | undefined;
   propertyId: string | null = null;
@@ -46,10 +46,10 @@ export class JobPostWizardsServiceProviderComponent implements OnInit{
 
 
   constructor(
-    private fb: FormBuilder, 
-    private route: ActivatedRoute,  
-    private jobService: JobService, 
-    private authService: AuthService, 
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private jobService: JobService,
+    private authService: AuthService,
     private router: Router,
     private notification: NzNotificationService) {
 
@@ -63,15 +63,15 @@ export class JobPostWizardsServiceProviderComponent implements OnInit{
 
   ngOnInit(): void {
 
-    if(this.authService.isLoggedIn()){
+    if (this.authService.isLoggedIn()) {
 
       this.route.queryParams.subscribe(params => {
         this.propertyId = params['propertyId'] || null;
         this.description = params['description'] || null;
-        this.jobType = params['jobType'] || null; 
+        this.jobType = params['jobType'] || null;
       });
 
-      if(this.jobType !=null) {
+      if (this.jobType != null) {
 
         this.jobService.getServiceProviders(this.jobType).subscribe((response) => {
           this.serviceProviders = response.data;
@@ -84,16 +84,16 @@ export class JobPostWizardsServiceProviderComponent implements OnInit{
         });
       }
     }
-    else{
+    else {
       this.router.navigate(['/login']);
     }
   }
   onSubmit() {
-    
+
     const jobRequest: CreateJobRequestDto = {
       PropertyId: this.propertyId ? this.propertyId : "",
       Description: this.description ? this.description : "",
-      Type: this.jobType ? this.jobType: "",
+      Type: this.jobType ? this.jobType : "",
       ServiceProviderId: this.serviceProviderForm.value.serviceProvider.id
     };
 
@@ -125,7 +125,7 @@ export class JobPostWizardsServiceProviderComponent implements OnInit{
         email: selectedServiceprovider.email
       });
       //
-      
+
     }
   }
 
@@ -138,8 +138,8 @@ export class JobPostWizardsServiceProviderComponent implements OnInit{
       .onClick.subscribe(() => {
         console.log('notification clicked!');//delete console.logs
       });
-      this.redirectAfterDelay();
-      
+    this.redirectAfterDelay();
+
   }
 
   OpenFailedNotification(error: string): void {
@@ -151,8 +151,8 @@ export class JobPostWizardsServiceProviderComponent implements OnInit{
       .onClick.subscribe(() => {
         console.log('notification clicked!');
       });
-      this.redirectAfterDelay();
-      
+    this.redirectAfterDelay();
+
   }
 
   redirectAfterDelay(): void {

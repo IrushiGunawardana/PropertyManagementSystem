@@ -35,7 +35,7 @@ export class UserLoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      email: ['', [Validators.required]],  
+      email: ['', [Validators.required]],
       password: ['', Validators.required],
     });
   }
@@ -48,7 +48,7 @@ export class UserLoginComponent implements OnInit {
           localStorage.setItem('refresh_token', response.refresh_token);
           console.log('User logged in successfully:', response);
 
-          this.router.navigate(['/dashboard']); 
+          this.router.navigate(['/dashboard']);
         } else {
           console.log('Login failed: Token not received.');
         }

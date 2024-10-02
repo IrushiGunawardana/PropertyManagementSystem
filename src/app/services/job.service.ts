@@ -22,7 +22,7 @@ export class JobService {
   constructor(
     private http: HttpClient,
     @Inject(PLATFORM_ID) private platformId: Object // Inject platformId to check if it's a browser
-  ) {}
+  ) { }
 
   getJobs(): Observable<JobsListResponseDto> {
     if (isPlatformBrowser(this.platformId)) {
@@ -43,33 +43,33 @@ export class JobService {
 
   getJobDetails(jobId: string): Observable<JobDetailsResponseDto> {
     const token = localStorage.getItem(this.tokenKey);
-      const headers = new HttpHeaders({
-        'Authorization': `Bearer ${token}`
-      });
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
     return this.http.get<JobDetailsResponseDto>(`${this.apiUrl}Job/getjobdetails/${jobId}`, { headers });
   }
 
   getProperties(): Observable<PropertyListResponseDto> {
     const token = localStorage.getItem(this.tokenKey);
-      const headers = new HttpHeaders({
-        'Authorization': `Bearer ${token}`
-      });
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
     return this.http.get<PropertyListResponseDto>(`${this.apiUrl}property/getpropertydetails`, { headers });
   }
 
   getJobTypes(): Observable<JobTypeListResponseDto> {
     const token = localStorage.getItem(this.tokenKey);
-      const headers = new HttpHeaders({
-        'Authorization': `Bearer ${token}`
-      });
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
     return this.http.get<JobTypeListResponseDto>(`${this.apiUrl}job/getjobtypes`, { headers });
   }
 
   getServiceProviders(jobTypeId: string): Observable<ServiceProviderResponseDto> {
     const token = localStorage.getItem(this.tokenKey);
-      const headers = new HttpHeaders({
-        'Authorization': `Bearer ${token}`
-      });
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
     return this.http.get<ServiceProviderResponseDto>(`${this.apiUrl}serviceprovider/getserviceproviderdetails?jobType=${jobTypeId}`, { headers });
   }
 

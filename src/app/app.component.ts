@@ -21,18 +21,18 @@ import { CookieService } from 'ngx-cookie-service';
   ],
   imports: [
     RouterOutlet,
-    NavbarComponent ,
+    NavbarComponent,
     HomeComponent,
     UserLoginComponent,
     RegisterComponent,
     JobPostWizardsJobDetailsComponent,
     JobPostWizardsServiceProviderComponent
-    ],
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
   title = 'PropertyManagementSystem';
 
-  
-    }
+
+}

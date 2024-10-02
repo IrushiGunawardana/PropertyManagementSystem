@@ -11,7 +11,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
 import { MatListModule } from '@angular/material/list';  // Import MatListModule
 import { AuthService } from '../../services/auth.service';
-import { JobService } from '../../services/job.service'; 
+import { JobService } from '../../services/job.service';
 import { Observable, startWith, map } from 'rxjs';
 import { MatOptionSelectionChange } from '@angular/material/core';
 import { Router } from '@angular/router';
@@ -51,7 +51,7 @@ export class JobPostWizardsJobDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(this.authService.isLoggedIn()){
+    if (this.authService.isLoggedIn()) {
       this.jobService.getProperties().subscribe((response) => {
         this.properties = response.data;
 
