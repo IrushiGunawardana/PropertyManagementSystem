@@ -32,10 +32,10 @@ namespace PropertyManagementSystem.Controllers
 
         // HTTP POST endpoint for registering a new user. The endpoint receives a RegisterRequestDto model from the request body.
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterRequestDto model)
+        public async Task<IActionResult> Register([FromBody] RegisterRequestDto request)
         {
             // Calls the RegisterAsync method from the IUserService to create a new user.
-            var result = await _userService.RegisterAsync(model);
+            var result = await _userService.RegisterAsync(request);
 
             // If the registration is successful, return an HTTP 200 OK status with a success message.
             if (result.Succeeded)
@@ -49,9 +49,9 @@ namespace PropertyManagementSystem.Controllers
 
         // HTTP POST endpoint for user login. Receives a LoginRequestDto object with the user's credentials.
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginRequestDto model)
+        public async Task<IActionResult> Login([FromBody] LoginRequestDto request)
         {
-            var tokens = await _userService.LoginAsync(model);
+            var tokens = await _userService.LoginAsync(request);
 
             if (tokens.AccessToken != null)
             {
@@ -63,9 +63,9 @@ namespace PropertyManagementSystem.Controllers
 
 
         [HttpPost("refresh-token")]
-        public async Task<IActionResult> RefreshToken([FromBody] TokenRequestDto model) //request
+        public async Task<IActionResult> RefreshToken([FromBody] TokenRequestDto request) 
         { 
-            var newAccessToken = await _userService.RefreshTokenAsync(model.RefreshToken);
+            var newAccessToken = await _userService.RefreshTokenAsync(request.RefreshToken);
 
             if (newAccessToken != null)
             {

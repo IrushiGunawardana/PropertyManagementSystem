@@ -61,20 +61,20 @@ namespace PropertyManagementSystem.Controllers
         // Authorizes access and creates a new job based on the data provided in the request body
         [Authorize]
         [HttpPost("createnewjob")]
-        public async Task<IActionResult> CreateJob([FromBody] CreateJobRequestDto model)
+        public async Task<IActionResult> CreateJob([FromBody] CreateJobRequestDto request)
         {
             // Retrieve the user ID from the claims in the JWT token
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             // Checks if the job request is valid based on custom logic in the service
-            if (!await _jobService.isValid(userId, model))
+            if (!await _jobService.isValid(userId, request))
             {
                 // If invalid, return a BadRequest response
                 return (IActionResult)Results.BadRequest();
             }
 
             // Calls the service to create the new job and retrieves the created job
-            Models.Schema.Job job = await _jobService.CreateJobAsync(userId, model);
+            Models.Schema.Job job = await _jobService.CreateJobAsync(userId, request);
 
             // Returns a success response with the job details of the newly created job
             return Ok(new CommonResponseDto
