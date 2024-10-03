@@ -55,6 +55,7 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
   }
 
   /**
+   *
    * If no access token is present in local storage, proceed with the request as is,
    * without adding the Authorization header.
    * 
